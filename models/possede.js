@@ -9,6 +9,7 @@ const Posseder = sequelize.define('Posseder', {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
+    autoIncrement: true,
   },
   id: {
     type: DataTypes.INTEGER,

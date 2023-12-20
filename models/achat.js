@@ -8,6 +8,7 @@ const Acheter = sequelize.define('Acheter', {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
+    autoIncrement: true,
   },
   id_user: {
     type: DataTypes.INTEGER,
