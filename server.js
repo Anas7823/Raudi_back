@@ -4,27 +4,26 @@ let cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./database/db');
 
-const achatRoute = require('./routes/achat');
-const modeleRoute = require('./routes/modele');
-const optionRoute = require('./routes/option');
-const possedeRoute = require('./routes/possede');
-const userRoute = require('./routes/user');
+const achatRoute = require('./routes/achatRoute');
+const modeleRoute = require('./routes/modeleRoute');
+const optionRoute = require('./routes/optionRoute');
+const possedeRoute = require('./routes/possedeRoute');
+const userRoute = require('./routes/userRoute');
 
-app.use('/', achatRoute);
-app.use('/', modeleRoute);
-app.use('/', optionRoute);
-app.use('/', possedeRoute);
-app.use('/', userRoute);
-
-sequelize.sync({ force: true }).then(() => {
-    console.log('Tables synchronisées');
-});
-
-app.use(bodyParser.json());
-app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // appel a nos routes dans le dossier route
+app.use('/achat', achatRoute);
+app.use('/modele', modeleRoute);
+app.use('/option', optionRoute);
+app.use('/possede', possedeRoute);
+app.use('/user', userRoute);
+
+// sequelize.sync({ force: true }).then(() => { // force: true permet de supprimer les tables à chaque lancement du serveur
+//     console.log('Tables synchronisées');
+// });
 
 
 port = 8000;
