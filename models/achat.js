@@ -8,7 +8,6 @@ const Acheter = sequelize.define('Acheter', {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
-    autoIncrement: true,
   },
   id_user: {
     type: DataTypes.INTEGER,
@@ -17,10 +16,10 @@ const Acheter = sequelize.define('Acheter', {
   },
   prixtotal: {
     type: DataTypes.DECIMAL(15, 2),
-  },
-  dateachat: {
-    type: DataTypes.DATE,
-  },
+  }
+}, {
+  sequelize,
+  freezeTableName: true
 });
 
 Acheter.belongsTo(Modele, { foreignKey: 'id_modele' });

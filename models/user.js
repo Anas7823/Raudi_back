@@ -1,4 +1,4 @@
-const sequelize = require('../config/database');
+const sequelize = require('../database/db');
 const { DataTypes } = require('sequelize');
 
 const User = sequelize.define('User', {
@@ -20,8 +20,11 @@ const User = sequelize.define('User', {
       type: DataTypes.STRING(255),
     },
     role: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.INTEGER,
     },
-  });
+  }, {
+    sequelize,
+    freezeTableName: true
+});
   
 module.exports = User;

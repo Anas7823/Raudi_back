@@ -5,17 +5,20 @@ const Modele = require('./modele');
 const Option = require('./option');
 
 const Posseder = sequelize.define('Posseder', {
+  id_option: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+  },
   id_modele: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
-    autoIncrement: true,
   },
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-  },
+ 
+}, {
+  sequelize,
+  freezeTableName: true
 });
 
 Posseder.belongsTo(Modele, { foreignKey: 'id_modele' });

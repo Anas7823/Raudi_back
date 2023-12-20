@@ -16,6 +16,9 @@ const Option = sequelize.define('Option', {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-  });
+  }, {
+    sequelize,
+    freezeTableName: true
+});
   
   module.exports = Option;
