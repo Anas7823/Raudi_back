@@ -1,4 +1,6 @@
 const modele = require('../models/modele');
+const possede = require('../models/possede');
+const option = require('../models/option');
 
 exports.createTableModele = async (req, res) => {
     await modele.sync({force: true});
@@ -25,6 +27,31 @@ exports.getOneModele = async (req, res) => {
             return res.status(400).json({message: "modele introuvable"});
         }
         res.status(200).json(modeleFound);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+exports.getModeleWithOption = async (req, res) => { // Afficher le modele avec ses options (client)
+    try {
+        const modeleFound = await modele.findOne({
+            where: {
+                id_modele: req.params.id
+            }
+        });
+        if (modeleFound == null) {
+            return res.status(400).json({message: "modele introuvable"});
+        }
+        const options = await possede.findAll({
+            where: {
+                id_modele: req.params.id
+            },
+            include: [{
+                model: option,
+                as: 'Option'
+            }]
+        });
+        res.status(200).json({modeleFound, options});
     } catch (err) {
         res.status(400).json({message: err.message});
     }

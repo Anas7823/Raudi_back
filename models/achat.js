@@ -4,14 +4,19 @@ const Modele = require('./modele');
 const User = require('./user');
 
 const Acheter = sequelize.define('Acheter', {
+  id:{
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
   id_modele: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
+    
     allowNull: false,
   },
   id_user: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
     allowNull: false,
   },
   prixtotal: {

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 let cors = require('cors');
 const bodyParser = require('body-parser');
-
+const sequelize = require('./database/db');
 const achatRoute = require('./routes/achatRoute');
 const modeleRoute = require('./routes/modeleRoute');
 const optionRoute = require('./routes/optionRoute');

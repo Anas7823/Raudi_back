@@ -70,3 +70,23 @@ exports.addOptionToModele = async (req, res) => { // Ajouter une option disponib
         res.status(400).json({message: err.message});
     }
 }
+
+exports.createOption = async (req, res) => { // Créer une option (admin)
+    try {
+        const optionFound = await option.findOne({
+            where: {
+                nom_option: req.body.nom_option
+            }
+        });
+        if (optionFound != null) {
+            return res.status(400).json({message: "option déja existante"});
+        }
+        await option.create({
+            nom_option: req.body.nom_option,
+            prix_option: req.body.prix_option
+        });
+        res.status(201).json({message: "option créé"});
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
