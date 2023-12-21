@@ -6,5 +6,6 @@ router.get('/create', userController.createTableUser); // Créer la table user (
 router.get('/users', userController.getAllUser); // Afficher tous les users (admin)
 router.post('/registre', userController.createUser); // Créer un user (all)
 router.post('/login', userController.login);   // Se connecter (all)
+router.post('/logout', userController.logout); // Se déconnecter (all)
 
 module.exports = router;

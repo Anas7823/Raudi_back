@@ -17,7 +17,7 @@ exports.Client = (req, res, next) => {
                     }
                 });
                 console.log(role);
-                if (role.role == 0 || role.role == 99) {
+                if (role.role == 0 || role.role == 99 || role.role == 1) {
                     next();
                 } else {
                     return res.status(401).json({

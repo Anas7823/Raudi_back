@@ -42,6 +42,30 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.logout = async (req, res) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Token manquant' });
+    }
+
+    try {
+        // Décoder le token pour obtenir les informations de l'utilisateur
+        const decoded = jwt.verify(token, process.env.API_KEY);
+
+        // Récupérer la liste actuelle des tokens révoqués
+        const user = await User.findByPk(decoded.id_user);
+        const currentRevokedTokens = user.revokedTokens || '';
+
+        // Mettre à jour la liste des tokens révoqués dans la base de données
+        await user.update({ revokedTokens: `${currentRevokedTokens},${token}` });
+
+        res.status(200).json({ message: 'Déconnexion réussie' });
+    } catch (error) {
+        res.status(401).json({ message: 'Token invalide' });
+    }
+}
+
 exports.getAllUser = async (req, res) => {
     try {
         const users = await user.findAll();

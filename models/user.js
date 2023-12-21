@@ -23,6 +23,10 @@ const User = sequelize.define('User', {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    revokedTokens: {
+      type: DataTypes.STRING(255),
+      defaultValue: '',
+    },
   }, {
     sequelize,
     freezeTableName: true
