@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
         console.log("Utilisateur trouvé");
         const isMatch = await bcrypt.compare(password, userFound.password);
         if (isMatch) {
-            const token = jwt.sign({id: userFound.id, mail: userFound.mail}, process.env.API_KEY, {expiresIn: '1h'});
+            const token = jwt.sign({id: userFound.id_user, mail: userFound.mail}, process.env.API_KEY, {expiresIn: '1h'});
             res.status(200).json({token: token});
         } else {
             res.status(401).json({message: "Mot de passe incorrect"});
