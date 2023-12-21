@@ -70,3 +70,36 @@ exports.deleteModele = async (req, res) => {
         res.status(400).json({message: err.message});
     }
 }
+
+exports.updateModele = async (req, res) => {
+    const {nom, nbPortes, moteur, nbPlaces, prix} = req.body;
+
+    try {
+        const modeleFound = await modele.findOne({
+            where: {
+                id_modele: req.params.id
+            }
+        });
+        if (modeleFound == null) {
+            return res.status(400).json({message: "modele introuvable"});
+        }
+        const modeleUpdated = await modele.update({
+            nom: nom,
+            nbPortes: nbPortes,
+            moteur: moteur,
+            nbPlaces: nbPlaces,
+            prix: prix,
+        }, {
+            where: {
+                id_modele: req.params.id
+            }
+        });
+        if (modeleUpdated) {
+            res.status(200).json({message: "modele modifié"});
+        } else {
+            res.status(400).json({message: "erreur dans la modification du modele"});
+        }
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
