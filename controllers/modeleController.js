@@ -104,7 +104,7 @@ exports.updateModele = async (req, res) => {
     try {
         const modeleFound = await modele.findOne({
             where: {
-                id_modele: req.params.id
+                id_modele: req.body.id
             }
         });
         if (modeleFound == null) {
@@ -118,7 +118,7 @@ exports.updateModele = async (req, res) => {
             prix: prix,
         }, {
             where: {
-                id_modele: req.params.id
+                id_modele: req.body.id
             }
         });
         if (modeleUpdated) {

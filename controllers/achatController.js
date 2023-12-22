@@ -42,17 +42,23 @@ exports.createAchat = async (req, res) => {
             }
         });
 
+        const options = req.body.options || [];
         const prixOptions = await Promise.all(options.map(async (optionId) => {
             const prixOption = await option.sum('prix', {
                 where: {
                     id_option: optionId
                 }
             });
-            return prixOption;
+            console.log("Prix de l'option pour id " + optionId + ": " + prixOption);
+            return prixOption || 0;
         }));
         
-        const prixTotalOptions = prixOptions.reduce((acc, prix) => acc + prix, 0);
+        const prixTotalOptions = prixOptions.reduce((acc, prix) => acc + parseFloat(prix), 0);
+        
         const prixTotal = prixModele + prixTotalOptions;
+
+        console.log("Options:", options);
+    console.log("Prix des options:", prixOptions);
 
     
         console.log("prixTotal");
