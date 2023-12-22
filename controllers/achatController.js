@@ -42,14 +42,19 @@ exports.createAchat = async (req, res) => {
             }
         });
 
-        const prixOption = await option.sum('prix', {
-            where: {
-                id_option: req.body.id_option
-            }
-        });
+        const prixOptions = await Promise.all(options.map(async (optionId) => {
+            const prixOption = await option.sum('prix', {
+                where: {
+                    id_option: optionId
+                }
+            });
+            return prixOption;
+        }));
+        
+        const prixTotalOptions = prixOptions.reduce((acc, prix) => acc + prix, 0);
+        const prixTotal = prixModele + prixTotalOptions;
 
     
-        const prixTotal = prixModele + prixOption;
         console.log("prixTotal");
         console.log(prixTotal);
 
