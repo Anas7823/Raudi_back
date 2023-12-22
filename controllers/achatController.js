@@ -83,7 +83,11 @@ exports.createAchat = async (req, res) => {
 exports.getTotalOfMonth = async (req, res) => {
     try {
         const total = await achat.sum('prixTotal', {
-            where: sequelize.where(sequelize.fn('MONTH', sequelize.col('createdAt')), new Date().getMonth() + 1)
+            where: {
+                createdAt: {
+                    [sequelize.Op.between]: [new Date().setDate(1), new Date()] // entre le 1er et le dernier jour du mois courant
+                }
+            }
         });
         res.status(200).json(total);
     } catch (err) {
