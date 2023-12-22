@@ -74,3 +74,44 @@ exports.getAllUser = async (req, res) => {
         res.status(400).json({message: err.message});
     }
 }
+
+exports.getOneUser = async (req, res) => {
+    try {
+        const userFound = await user.findOne({
+            where: {
+                id_user: req.params.id
+            }
+        });
+        if (userFound == null) {
+            return res.status(400).json({message: "user introuvable"});
+        }
+        res.status(200).json(userFound);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+exports.getUserByToken = async (req, res) => {
+    console.log(req.headers.authorization)
+    try {
+        const token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).json({ message: 'Token manquant' });
+        }
+        console.log(token)
+        let result = jwt.verify(token, process.env.API_KEY)
+        console.log(result)
+        
+        const userFound = await user.findOne({
+            where: {
+                id_user: result.id
+            }
+        });
+        if (userFound == null) {
+            return res.status(400).json({message: "user introuvable"});
+        }
+        res.status(200).json(userFound);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
